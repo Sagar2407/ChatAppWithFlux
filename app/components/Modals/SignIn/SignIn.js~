@@ -1,0 +1,58 @@
+import React, { Component, PropTypes } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import SignInForm from './SignInForm';
+
+import SessionActions from '../../../actions/SessionActions';
+import AccountActions from '../../../actions/AccountActions';
+
+class SignIn extends Component{
+  constructor() {
+    super();
+
+    this.state = {
+      canSubmit: false
+    };
+
+    this._handleClose = this._handleClose.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+    this._onFormValid = this._onFormValid.bind(this);
+  };
+
+  static propTypes = {
+    open: PropTypes.bool.isRequired
+  };
+
+  render() {
+    let self = this;
+    return(
+      <Modal show={self.props.open} onHide={self._handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <SignInForm ref="form" isValid={this._onFormValid} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="success" disabled={!self.state.canSubmit} onClick={self._handleSubmit} >Sign In</Button> :
+          <Button type="submit" bsStyle="danger" onClick={self._handleClose}>Cancel</Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  };
+
+  _handleClose() {
+    SessionActions.closeSignUpPopup();
+  };
+
+  _handleSubmit(e) {
+    e.preventDefault();
+    let user = this.refs.form.getModel();
+    AccountActions.register(user);
+  }
+
+  _onFormValid(isValid) {
+    this.setState({ canSubmit: isValid });
+  }
+}
+
+export default SignIn;

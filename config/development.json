@@ -1,0 +1,18 @@
+{
+  "environment": "development",
+  "app": {
+    "host": "localhost",
+    "port": 8001,
+    "url": "http://localhost:8001"
+  },
+  "db": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "name": "react_boilerplate"
+  },
+  "aws": {
+    "useAmiRole": false,
+    "accessKey": "your_key_here",
+    "accessSecret": "your_secret_here"
+  }
+}
